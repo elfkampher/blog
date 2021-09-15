@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UsersTableSeeder extends Seeder
 {
@@ -15,11 +17,18 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        Permission::truncate();
         Role::truncate();
         User::truncate();
 
         $adminRole = Role::create(['name' => 'Admin']);
         $writerRole = Role::create(['name' => 'Writer']);
+
+        $viewPostsPermission = Permission::create(['name' => 'View posts']);
+        $createPostsPermission = Permission::create(['name' => 'Create posts']);
+        $updatePostsPermission = Permission::create(['name' => 'Update posts']);
+        $deletePostsPermission = Permission::create(['name' => 'Delete posts']);
+
 
         $admin = new User;
         $admin->name = 'Juan Carlos';
@@ -35,7 +44,15 @@ class UsersTableSeeder extends Seeder
         $writer->password = bcrypt('AlphaJuliet2018?*');
         $writer->save();
 
-        $writer->assignRole($writerRole);
+        $writer->assignRole($adminRole);
+
+        $writert = new User;
+        $writert->name = 'Escritor Prueba';
+        $writert->email = 'escritor@stocksillustrated.com.mx';
+        $writert->password = bcrypt('AlphaJuliet2018?*');
+        $writert->save();
+
+        $writert->assignRole($writerRole);
 
     }
 }

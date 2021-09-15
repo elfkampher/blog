@@ -11,13 +11,13 @@
 	<div class="row mb-2">
 	  
     <div class="col-sm-6">
-	    <h1 class="m-0 text-dark">Todas las publicaciones</h1>      
+	    <h1 class="m-0 text-dark">Listado de usuarios</h1>      
 	  </div><!-- /.col -->
 
 	  <div class="col-sm-6">
 	    <ol class="breadcrumb float-sm-right">
 	      <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-	      <li class="breadcrumb-item active">Posts</li>
+	      <li class="breadcrumb-item active">Usuarios</li>
 	    </ol>
 	  </div><!-- /.col -->
 	</div><!-- /.row -->
@@ -27,10 +27,10 @@
 @section('content')
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">Listado de publicaciones</h3>
-    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#postModal">
-      <i class="fa fa-plus"></i> Crear publicación
-    </button>
+    <h3 class="card-title">Listado de Usuarios</h3>
+    <a href="{{ route('admin.users.create') }}" type="button" class="btn btn-primary float-right">
+      <i class="fa fa-plus"></i> Registrar Usuario
+    </a>
   </div>
   <!-- /.card-header -->
   <div class="card-body">
@@ -38,24 +38,26 @@
       <thead>
 	      <tr>
 	        <th>ID</th>
-	        <th>Titulo</th>	        
-	        <th>Extracto</th>
+	        <th>Nombre</th>	        
+	        <th>Email</th>
+          <th>Roles</th>
 	        <th>Acciones</th>
 	      </tr>
       </thead>
 
       <tbody>
-      	@foreach($posts as $post)
+      	@foreach($users as $user)
       	<tr>
-      		<td>{{ $post->id }}</td>
-      		<td>{{ $post->title }}</td>
-      		<td>{{ $post->excerpt }}</td>
+      		<td>{{ $user->id }}</td>
+      		<td>{{ $user->name }}</td>
+      		<td>{{ $user->email }}</td>
+          <td>{{ $user->getRoleNames()->implode(', ') }}</td>
       		<td>
-            <form class="formDelete" method="post" action="{{ route('admin.posts.destroy', $post->id) }}" id="eliminarPublicacion">
+            <form class="formDelete" method="POST" action="{{ route('admin.users.destroy', $user->id) }}" id="eliminarUsuario">
               @csrf
               {{ method_field('delete')}}
-              <a href="{{ route('posts.show', $post) }}" class="btn btn-xs btn-default" target="_blank"><i class="fas fa-eye"></i></a>
-        			<a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i></a>
+              <a href="{{ route('admin.users.show', $user) }}" class="btn btn-xs btn-default"><i class="fas fa-eye"></i></a>
+        			<a href="{{ route('admin.users.edit', $user) }}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i></a>
         			<button class="btn btn-xs btn-danger eliminarPost">
                 <i class="fas fa-times"></i>
               </button>
@@ -96,7 +98,7 @@
 var form = event.target.form; // storing the form
         swal({
           title: "Estas seguro?",
-          text: "Una vez borrada la publicación no podra recuperarse!",
+          text: "Una vez borrada el usuario no podra recuperarse!",
           icon: "warning",
           buttons: true,
           dangerMode: true,
@@ -104,7 +106,7 @@ var form = event.target.form; // storing the form
           if (willDelete) {
             $(".formDelete").submit();          // submitting the form when user press yes            
           } else {
-            swal("Cancelado", "La publicación sigue vigente :)", "error");
+            swal("Cancelado", "El usuario sigue registrado :)", "error");
           }
         });
   });

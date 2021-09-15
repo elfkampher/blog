@@ -59,11 +59,12 @@ class PostsController extends Controller
         return redirect()->route('admin.posts.edit', $post)->with('flash', 'La publicación ha sido guardada');
     }
 
-    public function delete($id)
-    {
-        $this->authorize('delete', $post);
+    public function destroy($id)
+    {        
 
         $post = Post::find($id);        
+
+        $this->authorize('delete', $post);
 
         $post->delete();
 
