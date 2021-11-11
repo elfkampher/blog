@@ -55,7 +55,7 @@ class Post extends Model
     {
         $query->whereNotNull('published_at')
         ->where('published_at','<=', Carbon::now())
-        ->orderBy('published_at');
+        ->orderBy('published_at','DESC');
     }
 
     public function scopeAllowed($query)

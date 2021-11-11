@@ -80,5 +80,17 @@ class PostsTableSeeder extends Seeder
 
         $post->tags()->attach(Tag::create(['name' => 'etiqueta4']));
 
+        $post = new Post();
+        $post->title = "Mi quinto post";
+        $post->url = str_slug("Mi quinto post");
+        $post->excerpt = "Extracto de mi quinto post";
+        $post->body = "Contenido de mi quinto post";
+        $post->published_at = Carbon::now()->subDays(4);
+        $post->category_id = 2;
+        $post->user_id = 3;
+        $post->save();
+
+        $post->tags()->attach(Tag::create(['name' => 'etiqueta5']));
+
     }
 }

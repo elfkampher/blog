@@ -29,11 +29,16 @@ class UsersTableSeeder extends Seeder
         $updatePostsPermission = Permission::create(['name' => 'Update posts']);
         $deletePostsPermission = Permission::create(['name' => 'Delete posts']);
 
+        $viewUsersPermission = Permission::create(['name' => 'View users']);
+        $createUsersPermission = Permission::create(['name' => 'Create users']);
+        $updateUsersPermission = Permission::create(['name' => 'Update users']);
+        $deleteUsersPermission = Permission::create(['name' => 'Delete users']);
+
 
         $admin = new User;
         $admin->name = 'Juan Carlos';
         $admin->email = 'jgutierrez@stocksillustrated.com.mx';
-        $admin->password = bcrypt('AlphaJuliet2018?*');
+        $admin->password = 'AlphaJuliet2018?*';
         $admin->save();
 
         $admin->assignRole($adminRole);
@@ -41,7 +46,7 @@ class UsersTableSeeder extends Seeder
         $writer = new User;
         $writer->name = 'Alejandra Solvg';
         $writer->email = 'avasquez@stocksillustrated.com.mx';
-        $writer->password = bcrypt('AlphaJuliet2018?*');
+        $writer->password = 'AlphaJuliet2018?*';
         $writer->save();
 
         $writer->assignRole($adminRole);
@@ -49,7 +54,7 @@ class UsersTableSeeder extends Seeder
         $writert = new User;
         $writert->name = 'Escritor Prueba';
         $writert->email = 'escritor@stocksillustrated.com.mx';
-        $writert->password = bcrypt('AlphaJuliet2018?*');
+        $writert->password = 'AlphaJuliet2018?*';
         $writert->save();
 
         $writert->assignRole($writerRole);
